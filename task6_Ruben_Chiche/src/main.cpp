@@ -6,12 +6,21 @@
 
 using namespace std;
 
-
+// const number of producer
 const size_t NUM_OF_PRODUCER = 2;
+
+// the global queue
 queue<tuple<thread::id, double, bool>> myContainer;
+
+// mutex
 mutex _mtx;
+
+// consition variable
 condition_variable cond_var;
 
+
+// Producer
+// Produce a Message into the queue
 void produce() {
 
 	thread::id myTid = this_thread::get_id();
@@ -35,6 +44,8 @@ void produce() {
 	cond_var.notify_all();
 }
 
+// Consumer
+// Consumer a Message from the queue
 void consume() {
 
 	int counter = NUM_OF_PRODUCER;
