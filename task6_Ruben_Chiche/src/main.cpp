@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// const number of producer
+// const number of producers
 const size_t NUM_OF_PRODUCER = 2;
 
 // the global queue
@@ -75,13 +75,21 @@ void consume() {
 
 int main()
 {
-	thread consumer(consume);
-	thread producer1(produce);
-	thread producer2(produce);
+	try {
 
-	producer1.join();
-	producer2.join();
-	consumer.join();
+		thread consumer(consume);
+		thread producer1(produce);
+		thread producer2(produce);
+
+		producer1.join();
+		producer2.join();
+		consumer.join();
+	}
+	catch (const std::exception& e) {
+		
+		std::cout << "Exception caught: " << e.what() << std::endl;
+	}
+	
 
 	return 0;
 }
